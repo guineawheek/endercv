@@ -17,7 +17,7 @@ public abstract class OpenCVPipeline implements CameraBridgeViewBase.CvCameraVie
     static {
         System.loadLibrary("opencv_java3");
     }
-    private JavaCameraView cameraView;
+    private CustomCameraView cameraView;
     private ViewDisplay viewDisplay;
     private Context context;
     private boolean initStarted = false;
@@ -51,7 +51,7 @@ public abstract class OpenCVPipeline implements CameraBridgeViewBase.CvCameraVie
             @Override
             public void run() {
                 // JCVs must be instantiated on a UI thread
-                cameraView = new JavaCameraView(finalContext, cameraIndex);
+                cameraView = new CustomCameraView(finalContext, cameraIndex);
                 cameraView.setCameraIndex(cameraIndex);
                 cameraView.setCvCameraViewListener(self);
                 inited = true;

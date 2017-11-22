@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.opencv.BuildConfig;
 import org.opencv.R;
+import org.opencv.core.Core;
 import org.opencv.core.Mat;
 import org.opencv.core.Size;
 
@@ -11,6 +12,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.res.Configuration;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -35,8 +37,6 @@ public abstract class CameraBridgeViewBase extends SurfaceView implements Surfac
     private static final int STARTED = 1;
 
     private int mState = STOPPED;
-    private Bitmap mCacheBitmap;
-    private CvCameraViewListener2 mListener;
     private boolean mSurfaceExist;
     private Object mSyncObject = new Object();
 
@@ -49,6 +49,8 @@ public abstract class CameraBridgeViewBase extends SurfaceView implements Surfac
     protected int mCameraIndex = CAMERA_ID_ANY;
     protected boolean mEnabled;
     protected FpsMeter mFpsMeter = null;
+    protected CvCameraViewListener2 mListener;
+    protected Bitmap mCacheBitmap;
 
     public static final int CAMERA_ID_ANY   = -1;
     public static final int CAMERA_ID_BACK  = 99;
