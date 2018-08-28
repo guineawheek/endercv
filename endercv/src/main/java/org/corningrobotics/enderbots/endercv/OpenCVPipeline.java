@@ -2,24 +2,31 @@ package org.corningrobotics.enderbots.endercv;
 
 import android.app.Activity;
 import android.content.Context;
+import android.view.Surface;
 
 import org.opencv.android.CameraBridgeViewBase;
 import org.opencv.android.JavaCameraView;
+import org.opencv.core.Core;
 import org.opencv.core.Mat;
 
 /**
  * Created by guinea on 6/19/17.
- * This is a base class for an OpenCV pipeline loop.
+ * This is a base class for an OpenCV pipeline loop. In most cases, one would want to override processFrame() with their own function.
  * TODO: consider more functionality in here, relating to camera parameter manipulation? For most cases it's not needed.
  */
 
 public abstract class OpenCVPipeline implements CameraBridgeViewBase.CvCameraViewListener2 {
     static {
-        System.loadLibrary("opencv_java3");
+        try {
+            System.loadLibrary("opencv_java3");
+        } catch (UnsatisfiedLinkError e) {
+            OpenCVLoader.loadOpenCV();
+            // pass
+        }
     }
-    private JavaCameraView cameraView;
+    protected JavaCameraView cameraView;
     private ViewDisplay viewDisplay;
-    private Context context;
+    protected Context context;
     private boolean initStarted = false;
     private boolean inited = false;
 
@@ -51,7 +58,7 @@ public abstract class OpenCVPipeline implements CameraBridgeViewBase.CvCameraVie
             @Override
             public void run() {
                 // JCVs must be instantiated on a UI thread
-                cameraView = new JavaCameraView(finalContext, cameraIndex);
+                cameraView = new CustomCameraView(finalContext, cameraIndex);
                 cameraView.setCameraIndex(cameraIndex);
                 cameraView.setCvCameraViewListener(self);
                 inited = true;
@@ -122,7 +129,24 @@ public abstract class OpenCVPipeline implements CameraBridgeViewBase.CvCameraVie
      */
     @Override
     public Mat onCameraFrame(CameraBridgeViewBase.CvCameraViewFrame inputFrame) {
-        return processFrame(inputFrame.rgba(), inputFrame.gray());
+        Mat rgba = new Mat();
+        Mat gray = new Mat();
+        switch (((Activity) context).getWindowManager().getDefaultDisplay().getRotation()) {
+            case Surface.ROTATION_0:
+                // this breaks horribly for some reason
+                Core.rotate(inputFrame.rgba(), rgba, Core.ROTATE_90_CLOCKWISE);
+                Core.rotate(inputFrame.gray(), gray, Core.ROTATE_90_CLOCKWISE);
+                break;
+            case Surface.ROTATION_90:
+                rgba = inputFrame.rgba();
+                gray = inputFrame.gray();
+                break;
+            case Surface.ROTATION_270:
+                Core.rotate(inputFrame.rgba(), rgba, Core.ROTATE_180);
+                Core.rotate(inputFrame.gray(), gray, Core.ROTATE_180);
+                break;
+        }
+        return processFrame(rgba, gray);
     }
 
     /**
