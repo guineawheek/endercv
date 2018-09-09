@@ -16,6 +16,9 @@ import java.io.OutputStream;
  */
 
 public class OpenCVLoader {
+    // This path may need to be changed for Samsung S5 phones; 
+    // its hardcoded because idk how else to get the path without a Context.
+    // Feel free to change the value to fit the phone you are using.
     private static String filesDir = "/data/user/0/com.qualcomm.ftcrobotcontroller/files";
     public static void setFilesDir(String path) {
         filesDir = path;
