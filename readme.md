@@ -33,10 +33,10 @@ Here's a semi-hackish way to do it:
 1. Close Android Studio. Download the latest version of EnderCV either from a `git pull` or using the zip download.
 2. Navigate to the folder for the robot controller app project (the ftc\_app folder) where EnderCV is installed.
 3. Delete the **openCVLibrary320** and **endercv** folders
-4. Go into **settings.gradle** with a text editor and delete the `include ':endercv'` and `include ':openCVLibrary320' lines
+4. Go into **settings.gradle** with a text editor and delete the `include ':endercv'` and `include ':openCVLibrary320'` lines
 5. Restart Android Studio and follow installation steps 3-10.
 
-# (New in 1.5) Loading libopencv\_java3.so from the phone's internal storage.
+# (New in 2.0) Loading libopencv\_java3.so from the phone's internal storage.
 Doing this can cut down on compile times as the OpenCV native library is now extermal to the robot controller app and is not copied on every deploy.
 
 1. Make a directory on the phone's internal storage named `EnderCV`
