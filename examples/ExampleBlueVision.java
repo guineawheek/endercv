@@ -79,7 +79,7 @@ public class ExampleBlueVision extends OpenCVPipeline {
         // Conceptually, there is going to be a single contour for the outline of every blue object
         // that we can find. We can iterate over them to find objects of interest.
         // the Imgproc module has many functions to analyze individual contours by their area, avg position, etc.
-        List<MatOfPoint> contours = new ArrayList<>();
+        contours = new ArrayList<>();
         // this function fills our contours variable with the outlines of blue objects we found
         Imgproc.findContours(thresholded, contours, new Mat(), Imgproc.RETR_LIST, Imgproc.CHAIN_APPROX_SIMPLE);
         // Then we display our nice little binary threshold on screen
