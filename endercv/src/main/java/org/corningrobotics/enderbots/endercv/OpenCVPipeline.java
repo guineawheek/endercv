@@ -9,6 +9,9 @@ import org.opencv.android.JavaCameraView;
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
 
+import static org.opencv.android.OpenCVLoader.initAsync;
+import static org.opencv.android.OpenCVLoader.initDebug;
+
 /**
  * Created by guinea on 6/19/17.
  * -------------------------------------------------------------------------------------
@@ -53,6 +56,9 @@ public abstract class OpenCVPipeline implements CameraBridgeViewBase.CvCameraVie
     protected JavaCameraView cameraView;
     private ViewDisplay viewDisplay;
     protected Context context;
+    private Mat rgba = new Mat();
+    private Mat gray = new Mat();
+    private Mat res = new Mat();
     private boolean initStarted = false;
     private boolean inited = false;
 
@@ -155,8 +161,11 @@ public abstract class OpenCVPipeline implements CameraBridgeViewBase.CvCameraVie
      */
     @Override
     public Mat onCameraFrame(CameraBridgeViewBase.CvCameraViewFrame inputFrame) {
-        Mat rgba = new Mat();
-        Mat gray = new Mat();
+        rgba.release();
+        gray.release();
+        res.release();
+        rgba = new Mat();
+        gray = new Mat();
         switch (((Activity) context).getWindowManager().getDefaultDisplay().getRotation()) {
             case Surface.ROTATION_0:
                 // this breaks horribly for some reason
@@ -172,7 +181,7 @@ public abstract class OpenCVPipeline implements CameraBridgeViewBase.CvCameraVie
                 Core.rotate(inputFrame.gray(), gray, Core.ROTATE_180);
                 break;
         }
-        return processFrame(rgba, gray);
+        return res = processFrame(rgba, gray);
     }
 
     /**
