@@ -15,6 +15,7 @@ include ':openCVLibrary3'
 include ':endercv'
 ```
 and resync the project. 
+
 6. In the left hand side project explorer in Android Studio, right-click **TeamCode**, and click on **Open Module Settings**.
 
 7. A **Project Struture** dialog should come up. Click the **Dependencies** tab.
