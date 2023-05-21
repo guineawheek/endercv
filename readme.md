@@ -1,3 +1,11 @@
+# DO NOT USE THIS SOFTWARE FOR NEW PROJECTS. USE [EASYOPENCV](https://github.com/OpenFTC/EasyOpenCV) INSTEAD. THIS REPO EXISTS FOR HISTORICAL REASONS.
+
+## This project is not supported, nor actively developed, and will likely not work on current FTC control systems. No support will be given if you have issues.
+
+_(It may be of interest if you're trying to revive 2015-2018 era FTC robots running ZTE Speeds, as this project has an ancient version of OpenCV that still somehow runs on them. In that case, good luck.)_
+
+---------------
+
 # Introduction
 
 EnderCV is an OpenCV 3 package for the FIRST Tech Challenge that's designed to be relatively simple, and with an easier and more reliable setup.
